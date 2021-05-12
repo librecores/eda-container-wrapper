@@ -1,0 +1,4 @@
+*/version.py
+.eggs
+*.egg-info
+__pycache__add
