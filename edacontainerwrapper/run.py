@@ -3,8 +3,8 @@ import subprocess
 from collections import namedtuple
 import os
 
-RunArguments = namedtuple("RunArguments", "split_cwd_tail tool_version")
-RunArgumentsDefaults = RunArguments(split_cwd_tail=0, tool_version=None)
+RunArguments = namedtuple("RunArguments", "split_cwd_tail tool_version interactive")
+RunArgumentsDefaults = RunArguments(split_cwd_tail=0, tool_version=None, interactive=True)
 
 def split_path(path, depth):
     base = path
@@ -38,7 +38,7 @@ def run(toolname, args, toolargs):
     root, tail = split_path(os.getcwd(), int(os.getenv("SPLIT_CWD_TAIL", args.split_cwd_tail)))
     workdir = os.path.join(tool.projectpath, tail)
 
-    cmd = ["docker", "run", "-ti",
+    cmd = ["docker", "run", "-ti" if args.interactive else "",
             "-v", f"{root}:{tool.projectpath}",
             "-u", f"{os.getuid()}:{os.getgid()}",
             "-w", f"{workdir}",
