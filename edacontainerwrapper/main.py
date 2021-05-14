@@ -25,7 +25,7 @@ def main():
         args = RunArguments(split_cwd_tail=0, interactive=True)
         toolargs = sys.argv[1:]
 
-    run(tool, args, toolargs)
+    sys.exit(run(tool, args, toolargs))
 
 if __name__ == "__main__":
     main()
