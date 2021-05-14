@@ -3,6 +3,7 @@ from collections import namedtuple
 import os
 
 from .tools import tools
+from .version import version
 
 RunArguments = namedtuple("RunArguments", "split_cwd_tail tool_version interactive cwd_base")
 
@@ -21,6 +22,7 @@ def parse_args():
     parser.add_argument('--cwd-base', default=defargs.cwd_base)
     parser.add_argument('--tool-version')
     parser.add_argument('--non-interactive', action="store_true", default=not defargs.interactive)
+    parser.add_argument('--version', action='version', version=version)
     parser.add_argument('tool', choices=tools.keys())
     parser.add_argument('toolargs', nargs='*')
     cmdargs = parser.parse_args()
