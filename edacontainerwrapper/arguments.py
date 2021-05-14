@@ -7,17 +7,25 @@ from .version import version
 
 RunArguments = namedtuple("RunArguments", "split_cwd_tail tool_version interactive cwd_base")
 
-def defaults_or_env(tool=None):
+def defaults_or_env(tool=None, defaults=None):
+    if not defaults:
+        defaults = RunArguments(
+            split_cwd_tail = 0,
+            tool_version = None,
+            interactive = True,
+            cwd_base = None
+        )
     return RunArguments(
-        split_cwd_tail = os.getenv("ECW_SPLIT_CWD_TAIL", default=0),
-        tool_version = os.getenv("ECW_TOOL_VERSION", default=tool.default_version if tool else None),
-        interactive = os.getenv("ECW_INTERACTIVE", default="True").lower() in ("true", "1"),
-        cwd_base = os.getenv("ECW_CWD_BASE"),
+        split_cwd_tail = os.getenv("ECW_SPLIT_CWD_TAIL", default=defaults.split_cwd_tail),
+        tool_version = os.getenv("ECW_TOOL_VERSION", default=tool.default_version if tool else defaults.tool_version),
+        interactive = os.getenv("ECW_INTERACTIVE", default="True" if defaults.interactive else "False").lower() in ("true", "1"),
+        cwd_base = os.getenv("ECW_CWD_BASE", default=defaults.cwd_base),
     )
 
 def parse_args():
     defargs = defaults_or_env()
     parser = argparse.ArgumentParser()
+    parser.add_argument('--write-script')
     parser.add_argument('--split-cwd-tail', type=int, default=defargs.split_cwd_tail)
     parser.add_argument('--cwd-base', default=defargs.cwd_base)
     parser.add_argument('--tool-version')
@@ -37,4 +45,4 @@ def parse_args():
         interactive = not cmdargs.non_interactive
     )
 
-    return tool, args, toolargs
+    return tool, cmdargs.write_script, args, toolargs

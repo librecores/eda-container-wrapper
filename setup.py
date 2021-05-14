@@ -22,7 +22,9 @@ setup(
         "License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)",
         "Topic :: Utilities",
     ],
-    entry_points={"console_scripts": ["eda-container-wrapper = edacontainerwrapper.main:main"]},
+    entry_points={"console_scripts": [
+        "eda-container-wrapper = edacontainerwrapper.main:main",
+    ]},
     setup_requires=[
         "setuptools_scm",
     ],
