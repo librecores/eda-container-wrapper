@@ -32,4 +32,6 @@ def run(toolname, args, toolargs):
             f"{tool.image}:{version}"
             ] + toolargs
 
+    print(cmd)
+
     return subprocess.call(" ".join(cmd), shell=True)
