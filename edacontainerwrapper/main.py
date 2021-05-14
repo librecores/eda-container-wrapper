@@ -1,5 +1,6 @@
 import argparse
 import os
+import stat
 import sys
 
 from .run import run
@@ -16,7 +17,7 @@ def write_wrapper(tool, path, args):
         f.write("if __name__ == '__main__':\n")
         f.write(f"\targs = defaults_or_env(tools['{tool}'], {str(args)})\n\n")
         f.write(f"\tsys.exit(run('{tool}', args, sys.argv[1:]))\n")
-
+    os.chmod(path, stat.S_IRWXU | stat.S_IRGRP | stat.S_IXGRP | stat.S_IROTH | stat.S_IXOTH)
 
 def main():
     if os.path.basename(sys.argv[0]) == "eda-container-wrapper":
