@@ -17,13 +17,18 @@ def run(toolname, args, toolargs):
     version = args.tool_version
 
     cwd = os.getcwd()
+    print(f"CWD in runner: {cwd}")
     if args.cwd_base:
         replace, base = args.cwd_base.split(":")
         if cwd.startswith(base):
+            print(f" replace {base} with {replace}")
             cwd = os.path.join(replace,cwd[len(base):].lstrip("/"))
+            print(f"CWD: {cwd}")
 
     root, tail = split_path(cwd, args.split_cwd_tail)
+    print(f"split root '{root}' and tail '{tail}'")
     workdir = os.path.join(tool.projectpath, tail)
+    print(f"CWD in container: {workdir}")
 
     cmd = ["docker", "run", "-ti" if args.interactive else "",
             "-v", f"{root}:{tool.projectpath}",
