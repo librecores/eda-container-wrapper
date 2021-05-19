@@ -7,7 +7,7 @@ long_description = (here / 'README.md').read_text(encoding='utf-8')
 
 setup(
     name='eda-container-wrapper',
-    description="Synchronize ICS to Exchange",
+    description="Generic wrapper tool around open source EDA tools that runs Docker containers",
     packages=["edacontainerwrapper"],
     use_scm_version={
         "relative_to": __file__,
@@ -17,7 +17,7 @@ setup(
     long_description_content_type='text/markdown',
     url='https://github.com/librecores/eda-container-wrapper',
     author="Stefan Wallentowitz",
-    author_email='stefan.wallentowitz@hm.edu',
+    author_email='stefan@wallentowitz.de',
     classifiers=[
         "License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)",
         "Topic :: Utilities",
