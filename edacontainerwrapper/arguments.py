@@ -17,7 +17,7 @@ def defaults_or_env(tool=None, defaults=None):
         )
     return RunArguments(
         split_cwd_tail = os.getenv("ECW_SPLIT_CWD_TAIL", default=defaults.split_cwd_tail),
-        tool_version = os.getenv("ECW_TOOL_VERSION", default=tool.default_version if tool else defaults.tool_version),
+        tool_version = os.getenv("ECW_TOOL_VERSION", default=tool.default_version if tool and not defaults.tool_version else defaults.tool_version),
         interactive = os.getenv("ECW_INTERACTIVE", default="True" if defaults.interactive else "False").lower() in ("true", "1"),
         cwd_base = os.getenv("ECW_CWD_BASE", default=defaults.cwd_base),
     )
